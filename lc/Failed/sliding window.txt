@@ -1,0 +1,41 @@
+#include <iostream>
+#include<unordered_map>
+using namespace std;
+
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        unordered_map<char,int> f1;
+        for(int i=0;i<s1.size();i++){
+            f1[s1[i]] += 1;
+        }
+        unordered_map<char,int> window;
+        int wsize = 0;
+        int last = 0;
+        for(int i=0;i<s2.size();i++){
+            if(window[s2[i]]<f1[s2[i]]){
+                window[s2[i]] += 1; //"Expands" window
+                ++wsize;
+                if (wsize==s1.size()){
+                window[s2[last]] -= 1;
+                ++last;
+                }
+            }
+            else{
+                if (window[s2[last]]>0) window[s2[last]]-=1;
+                ++last;
+                if (wsize>0) --wsize;
+            }
+            if (wsize==s1.size()) return true;
+        }
+        return false;
+}};
+
+int main(){
+    string s1 = "cd";
+    string s2 = "ddc";
+    Solution x;
+    bool x2;
+    x2 = x.checkInclusion(s1,s2);
+    cout << x2;
+}

@@ -1,0 +1,93 @@
+Introduction to trees:
+-not a linear data type (linear meaning something like array/linkedlist/stack/queue)
+-presents hierarchical data
+
+TREE DEFINITION
+A collection of entities called Nodes linked together to simulate a hierarchy.
+						A		<------called the root node
+					   / \		<-- graph edges (links)
+					  B   C		<-----children, parent, sibling
+					 / \   \
+					D	E	F <--leaf node has no children
+
+B and C are sibilings and are children to A.
+D, E, F are descendants of A, which is their ancestor
+E and F are cousins
+C is an uncle of E
+
+Trees are RECURSIVE data structures. Trees are comprised of a root and subtrees.
+Recursion is reducing something in a self similar manner.
+
+In a tree with N nodes, there are (N-1) edges. 
+
+DEPTH and HEIGHT
+Depth of x = length of path from root to x
+		   = number of edges in path from root to x
+Depth of root node = 0
+Depth of B 		   = 1
+
+Height of x = no. of edges in longest path from x to a leaf
+			= no. of edges till it hits the bottom of the tree
+Height of root node = Height of tree
+Height of leaf = 0
+
+It is easy to confuse between depth and height.
+
+Most common implementation of trees are using nodes and pointers.
+
+BINARY TREES: Trees where a node can have at most 2 children
+
+Specifically for a Binary Tree:
+struct Node{
+	int data;
+	Node* left;
+	Node* right;
+}
+
+Applications:
+1) Storing naturally hierarchical data eg file system
+2) Organizing data for quicksearch ,insertion, deletion eg BST
+3) Trie ->dictionary
+4) Network Routing algorithms
+
+Other descriptors of binary trees:
+Strict - having either 2 or 0 children
+Complete - all levels except possibly the last are completely filled and all nodes are as left as possible.
+Perfect binary tree - all nodes filled
+	Max no. of nodes in binary tree with height h
+	= 2^0 + 2^1 +...+ 2^h
+	= 2^(h+1)-1
+	= 2^(no. of levels)-1
+
+What is the height of a perfect binary tree? Let n be number of nodes
+n = 2^(h+1)-1
+rearranging, h = lg2(n+1)-1
+
+In general the height of complete binary tree = floor(lg2 n)
+
+In general in a binary tree of n elems
+min height = floor (lg n) => approx lg n
+max height = n-1 (where the tree is a linked list.)
+
+If traversal and sorting requires you to go down a list, this means that time complexity is related to the height of the tree O(h).
+
+For a completebinary tree time complexity = O(lg n)
+For a sparse bianry tree, time complexity = O(n)
+
+Hence it's very important for a binary tree to be dense and height to be minimised ie 
+BALANCED where the difference between the left and right subtree for every node is not more than k (most of the time, its 1)
+
+Height -> no. of edges in longest path from root to a leaf.
+
+Height of an empty tree = -1
+(AN EMPTY TREE HAS 0 NODES)
+Height of tree with 1 node = 0
+
+diff in height = |h left - h right| 
+
+Implementation:
+Can implemnet binary tree using:
+a) dynamically created nodes
+b) arrays in special cases, for complete binary trees or for heaps
+					
+				

@@ -1,0 +1,39 @@
+/*Once an array is full, you need to create a new larger array (dynamic array) which is O(n)
+Memory is also wasted if large parts of the array is unused */
+
+/*Enqueue is O(n), but Dequeue is O(1), because enq is at the end of the list (have to traverse there) while dequeue is at the beginning of the list
+
+Can be fixed with pointer to end of list to make enq o(1) */
+
+struct Node*{
+	int data;
+	struct Node* next;
+}
+
+Node* front = NULL;
+Node* rear = NULL;
+void enqueue(int x){
+	Node* temp = new Node();
+	temp->data = x;
+	temp->next = NULL;
+	if (front == NULL) {
+		front = rear = temp;
+		return
+	}
+	rear->next = temp;
+	rear = temp;
+}
+
+void dequeue(){
+	if (front == NULL){
+		//throw error
+		return;
+	}
+	Node* temp = front;
+	if (front == rear){
+		front = rear = NULL; //the case where theres only one node
+	}
+	else front = front->next;
+	//at this point only temp is pointing to the now isolated node. it's time to delete the node!
+	free(temp); //frees the thing in the memory the pointer is pointing to
+}

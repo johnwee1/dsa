@@ -1,0 +1,117 @@
+#include <iostream>
+#include <string>
+#include <deque>
+using namespace std;
+
+/* This solution of mine had the correct logic but a bogged down spaghetti code approach
+No need for structs/deque to be built for every single palindrome.
+only need to keep track of indices of start/end for the longest palindrome.
+code snippet in java:
+public String longestPalindrome(String s) {
+    if (s == null || s.length() < 1) return "";
+    int start = 0, end = 0;
+    for (int i = 0; i < s.length(); i++) {
+        int len1 = expandAroundCenter(s, i, i); //for cases like bab
+        int len2 = expandAroundCenter(s, i, i + 1); //for cases like abba
+        int len = Math.max(len1, len2); //pick len2 if its even palindrome
+        if (len > end - start) {
+            start = i - (len - 1) / 2;
+            end = i + len / 2;
+        } //Magic ????
+    }
+    return s.substring(start, end + 1); //same as s.substr(start,len);
+}
+
+private int expandAroundCenter(String s, int left, int right) {
+    int L = left, R = right;
+    while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+        L--;
+        R++;
+    }
+    return R - L - 1;
+}
+
+This solution is O(1) space and O(n2) time*/
+
+struct item{
+    unsigned long long size;
+    deque<char> deq;
+};
+
+class Solution {
+public:
+    string longestPalindrome(string s){
+        if (s.size()==1) return s;
+        if (s.size()==2){
+            if (s[0]==s[1]) return s;
+            else return s.substr(0,1);
+        }
+        if (s.size()==3){
+            if (s[0]==s[1] && s[0]!=s[2]) return s.substr(0,2);
+        }
+        unsigned long long max_size=0;
+        deque<char> result;
+        for(int i=1;i<s.size();++i){
+            item temp;
+            temp = helper(s,i);
+            if (temp.size>max_size) {
+                max_size = temp.size;
+                result = temp.deq;
+            }
+        }
+        string fresult = "";
+        for (char i:result){
+            fresult += i;
+        }
+        return fresult;
+    }
+private:
+    item helper(string s, int& i){
+        int l = i-1;
+        int le = l;
+        int r = i+1;
+        int re = r+1;
+        bool even = false;
+        deque<char> odd;
+        odd.push_back(s[i]);
+        deque<char> nodd;
+        if (i!=s.size()-1){
+            if(s[i]==s[i+1]){
+                even = true;
+                nodd.push_back(s[i]);
+                nodd.push_back(s[i]);
+            }
+        }
+        while(l>=0 && r<=s.size()-1){
+            if(s[l]==s[r]){
+                odd.push_back(s[l]);
+                odd.push_front(s[l]);
+                --l;
+                ++r;
+            }
+            else break;
+        }
+        while(le>=0 && re<=s.size()-1){
+            if(even){
+                if(s[le]==s[re]){
+                    nodd.push_back(s[le]);
+                    nodd.push_front(s[le]);
+                    --le;
+                    ++re;
+                }
+                else break;
+            }
+            else break;
+        }
+        if (nodd.size()>odd.size()){
+            return {nodd.size(), nodd};
+        } else return {odd.size(), odd};
+    }
+};
+
+int main(){
+    Solution sol;
+    string test = "bb";
+    cout << sol.longestPalindrome(test);
+    
+}
