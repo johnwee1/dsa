@@ -1,1 +1,3 @@
-# Data structures and algorithms
+A place where I just put the stuff that I'm doing while I have some free time/am bored.
+
+Also took me a whole day just to get the hang of this version control system but I guess I have a rudimentary understanding of it now... I spent one hour trying googling how to deal with conflicts... and the discrepancies between master and main...
