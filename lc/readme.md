@@ -1,4 +1,4 @@
-##where I dump all my leetcode attempts (the non-trivial ones)
+#where I dump all my leetcode attempts (the non-trivial ones)
 
 Some leetcode questions can be also found elsewhere, but those were attempted as a result of learning.
 
