@@ -1,8 +1,12 @@
-//Longest Common Substring problem
-//DP sol is O(mn) but look up suffix trees
 #include <string>
 #include <iostream>
 using namespace std;
+
+//A very janky piece of code that eventually failed because I didn't understand the LC problem enough
+//https://leetcode.com/problems/delete-operation-for-two-strings/
+//This code works but it basically identifies the longest common substring through brute force
+//what the question asked was the LONGEST COMMON SUBSEQUENCE !!!!!!!!!!!!!!!!!
+//And then deletes everything else to return an integer... but that's not what the question required.
 
 class Solution {
 public:
@@ -26,6 +30,7 @@ public:
                         still_matching = true;
                     }
                     current.push_back(wi[x++]);
+                    //I'm kind of making a "sliding window" here, but there are probably better ways of doing this.
                     if (current.length()>longest.length()) longest = current;
                     if (x==wi.length()) {
                         x = 0;
