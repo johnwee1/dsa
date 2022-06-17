@@ -17,12 +17,6 @@ public:
                 else dp[i][j] = max(dp[i-1][j],dp[i][j-1]); //If the newest char doesnt match we just take the longest subsequence of the preceding one.
             }
         }
-        for(int i=0;i<s1.size()+1;++i){
-            for(int j=0;j<s2.size()+1;++j){
-                cout << dp[i][j] << " ";
-            }
-            cout << "\n";
-        }
         return dp[s1.size()][s2.size()];
     }
 };
