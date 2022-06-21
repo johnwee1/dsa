@@ -13,7 +13,7 @@ public:
             map[equations[i][0]].push_back(pair<string,double>(equations[i][1],values[i]));
             map[equations[i][1]].push_back(pair<string,double>(equations[i][0],1/values[i]));
         }
-        vector<double> ans (0.0,queries.size());
+        vector<double> ans (queries.size(),0.0);
         for(int i=0;i<queries.size();++i){
             if (map.find(queries[i][0])==map.end() || map.find(queries[i][1])==map.end()){
                 ans[i] = -1;
@@ -24,30 +24,29 @@ public:
         return ans;
     }
     double dfs(string a, string b, unordered_map<string,vector<pair<string,double>>>& map){
-        unordered_map<string, bool> vis;
+        unordered_map<string, bool> vis; 
         vis[a] = true;
+        if (a==b) return 1;
         return dfs(a,b,map,vis);
     }
 
     double dfs(string a, string b, unordered_map<string,vector<pair<string,double>>>& map,unordered_map<string, bool>& vis){
-        //this function won't even be called if the node is already visited
-        if (a==b) return 1;
         for(auto& [key,value]:map[a]){
-           if(vis.find(key)!=vis.end()) continue;
-           vis[key] = true;
-           if(key==b) return value;
-           dfs(key,b,map,vis);
+            if(vis.find(key)!=vis.end()) continue; //If already visited go next
+            vis[key] = true;
+            if (key==b) return value;
+            double x = dfs(key,b,map,vis);
+            if (x!=-1) return x*value;
         }
-        //Once the list is empty... PROBLEMATIC IN SOME WAY
-        //return dfs() * value ???? how to get the value to change as it propagates back up?
         return -1;
+        
     }
 };
 
 int main(){
     Solution s;
-    vector<vector<string>> equations = {{"A","B"},{"B","C"}};
-    vector<double> weights = {2.0,3.0};
-    vector<vector<string>> queries = {{"A","C"}};
+    vector<vector<string>> equations = {{"x1","x2"},{"x2","x3"},{"x3","x4"},{"x4","x5"}};
+    vector<double> weights = {3.0,4.0,5.0,6.0};
+    vector<vector<string>> queries = {{"x2","x4"}};
     cout << s.calcEquation(equations,weights,queries)[0];
 }
