@@ -27,38 +27,34 @@ public:
         list<string> q;
         q.push_back(beginWord);
         dict[beginWord] = 1; //init length = 1;
-        while(!q.empty()){
-            bool pop_front = false;
-            for(string word: q){
-                if(pop_front) q.pop_front();
-                pop_front = false;
-                for(int i=0;i<word.size();i++){
-                    char x = word[i];
-                    int len = dict[word];
-                    for(char j='a';j!='z'+1;j++){
-                        if (word[i]!=j) word[i] = j;
-                        else continue;
-                        if (word==endWord) return len+1; 
-                        if(dict.find(word)!=dict.end()){ //if this word is in fact in the dictionary
-                            if (dict[word]==0){
-                                q.push_back(word);
-                                dict[word] = len+1; //prevent cycling
-                            }
+        for(;;){
+            string word;
+            if (q.empty()) break;
+            word = q.front();
+            for(int i=0;i<word.size();i++){
+                char x = word[i];
+                int len = dict[word];
+                for(char j='a';j!='z'+1;j++){
+                    if (word[i]!=j) word[i] = j;
+                    else continue;
+                    if (word==endWord) return len+1; 
+                    if(dict.find(word)!=dict.end()){ //if this word is in fact in the dictionary
+                        if (dict[word]==0){
+                            q.push_back(word);
+                            dict[word] = len+1; //prevent cycling
                         }
                     }
-                    word[i] = x;
                 }
-                pop_front = true;
-                if (q.size()==1) return 0;
+                word[i] = x;
             }
+            q.pop_front();
         }
         return 0; //empty q
     }
 };
-
 int main(){
     Solution sol;
-    vector<string> wordList = {"hot","dog"};
+    vector<string> wordList = {"hot","dot","dog"};
     string a,b;
     a = "hot";
     b = "dog";
