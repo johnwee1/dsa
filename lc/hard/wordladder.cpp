@@ -9,7 +9,9 @@ erasing/pop_front deletes all references to the iterator (which I was currently 
 while it still works locally, it totally didn't work on Leetcode.
 apparently c++ trades compiler info/readability for speed
 
-I tried to submit this for fun and it actually passed the judge after fixing the debug
+UPDATE: The key is to use a while(true) kind of loop that isn't checking for a condition and this allows me to reduce one level of nesting,
+as well as reliance on the for (string word:q) loop that utilizes an iterator. CHECK COMMIT HISTORY TO COMPARE CODE CHANGES
+
 I will try bi-directional BFS on a later date.
 */
 
